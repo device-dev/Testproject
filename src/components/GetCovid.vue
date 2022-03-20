@@ -1,0 +1,393 @@
+<template>
+    <div>
+    <div class="container">
+      <!-- Card statistics for infected count -->
+      <div class="card-covid card-stats">
+        <div class="card-body">
+          <div class="color">
+            <h5 class="card-title text-uppercase text-muted">ติดเชื้อสะสม</h5>
+            <span class="h2 font-weight-bold total_cases color-red count"
+              >{{numberformat(data.Confirmed)}}</span>
+            
+          </div>
+          <div
+            class="icon icon-shape bg-gradient-red text-white rounded-circle shadow"
+          >
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-green card-stats">
+        <!-- Card statistics for death counts -->
+        <div class="card-body">
+          <div class="color">
+            <h5 class="card-title text-uppercase text-muted">หายแล้ว</h5>
+            <span class="h2 font-weight-bold deaths color-green count">{{numberformat(data.Recovered)}}</span>
+          </div>
+          <div
+            class="icon icon-shape bg-gradient-green text-white rounded-circle shadow"
+          >
+            <i class="fas fa-procedures"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-ho card-stats">
+        <div class="card-body">
+          <div class="color">
+            <h5 class="card-title text-uppercase text-muted">รักษาอยู่ใน รพ</h5>
+            <span class="h2 font-weight-bold recovered color-blue count"
+              >{{numberformat(data.active)}}</span
+            >
+          </div>
+          <div
+            class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow"
+          >
+            <i class="fas fa-child"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-dead-covid card-stats">
+        <!-- Card statistics for daily new cases count -->
+        <div class="card-body">
+          <div class="color">
+            <h5 class="card-title text-uppercase text-muted">
+                เสียชีวิต
+            </h5>
+            <span class="h2 font-weight-bold new_cases color-green count"
+              >{{numberformat(data.Deaths)}}</span
+            >
+          </div>
+          <div
+            class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow"
+          >
+            <i class="fas fa-bell"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+</template>
+
+<script>
+export default {
+  data() {
+      return {
+          data:{},
+      }
+  },
+ async created()
+  {
+      const api  = 'https://static.easysunday.com/covid-19/getTodayCases.json';
+      const res =   await this.axios.get(api);
+
+      console.log(res.data);
+      this.data =  res.data;
+  },
+  methods:{
+      numberformat(x)
+      {
+          let nf = new Intl.NumberFormat('en-US');
+            return nf.format(x);
+      }
+  }
+}
+</script>
+
+<style type="scss"> 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+  color: #625f7f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  background-color: #0d0a0b;
+  background-image: linear-gradient(315deg, #0d0a0b 0%, #140255 74%);
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-weight: 700;
+  margin: 0;
+  color: #32325f;
+}
+
+.text-muted {
+  color: #fff;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+  color: #8898aa !important;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+}
+
+
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+/* style the cards */
+
+.container {
+  width: 600px;
+  height: auto;
+  top: 50%;
+  background: #f4f8fd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/*
+.container:hover {
+  transition: 0.5s;
+  color: #255784;
+  background: #2196f3;
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}*/
+
+h1.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 1rem 0;
+  color: #eee;
+}
+
+.color {
+  max-width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+a.shower {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px;
+  color: #04335a;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-decoration: none;
+  font-size: 24px;
+  overflow: hidden;
+  transition: 0.5s;
+  color: #255784;
+  background: #2196f3;
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 15px;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+.card-covid{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border:  solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 15px;
+  margin: 10px;
+  transition: 0.5s;
+}
+.card-green{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border:  solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 15px;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+.card-ho{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border:  solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 15px;
+  margin: 10px;
+  transition: 0.5s;
+}
+.card-dead-covid{
+    position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border:  solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 15px;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+.card-dead-covid:hover{
+ transition: 0.5s;
+  color:  #fff;
+  background: orange;
+  transform: translateY(-2px) scale(1.1, 1.1);
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+.card-green:hover {
+  transition: 0.5s;
+  color:  #fff;
+  background: green;
+  transform: translateY(-2px) scale(1.1, 1.1);
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+
+.card-ho:hover {
+  transition: 0.5s;
+  color:  #fff;
+  background: blue;
+  transform: translateY(-2px) scale(1.1, 1.1);
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+
+.card-covid:hover  {
+  transition: 0.5s;
+  color:  #fff;
+  background: red;
+  transform: translateY(-2px) scale(1.1, 1.1);
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+
+
+
+
+.card-dead:hover {
+  transition: 0.5s;
+  color:  #fff;
+  background: red;
+  transform: translateY(-2px) scale(1.1, 1.1);
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 10px #2196f3;
+}
+
+
+.card-body {
+  min-height: 1.5px;
+  min-width: 1.5px;
+  padding: 1.4rem;
+  display: flex;
+  padding-right: 1rem 1.5rem;
+  border-radius: 15px;
+}
+
+.card-body .h2 {
+  font-size: 2.7rem;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
+.icon-shape {
+  display: inline-flex;
+  padding: 12px;
+  text-align: center;
+  border-radius: 50%; /* makes icons circular*/
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-shape i,
+.icon-shape svg {
+  font-size: 2rem;
+}
+
+
+.bg-gradient-red {
+  background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+}
+
+.bg-gradient-green {
+  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+}
+
+.bg-gradient-orange {
+  background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
+}
+
+
+
+</style>
